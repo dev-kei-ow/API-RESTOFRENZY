@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const usuarioRouter = require('./src/api/routes/usuarioRouter');
+const empleadoRouter = require('./src/api/routes/empleadoRouter');
 const cursoRouter = require('./src/api/routes/cursoRouter');
 const grupoRouter = require('./src/api/routes/grupoRouter');
 const tareaRouter = require('./src/api/routes/tareaRouter');
@@ -11,7 +11,7 @@ app.use(express.urlencoded({ limit: '100mb', extended: true }));
 app.use(cors());
 
 /*ROUTES*/
-app.use('/api/usuario', usuarioRouter);
+app.use('/api/empleado', empleadoRouter);
 app.use('/api/curso', cursoRouter);
 app.use('/api/grupo', grupoRouter);
 app.use('/api/tarea', tareaRouter);

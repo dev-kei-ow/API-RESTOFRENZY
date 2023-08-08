@@ -15,10 +15,10 @@ const dbSocketPath = process.env.DB_SOCKET_PATH || '/cloudsql';
 
 const pool = mysql.createPool({
 	connectionLimit: 3,
-	host: '35.199.68.115',
+	host: 'localhost',
 	user: 'root',
-	password: 'Idat123',
-	database: 'hereAndNow',
+	password: 'root',
+	database: 'dbrestrofrenzy',
 });
 
 
