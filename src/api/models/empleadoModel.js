@@ -4,7 +4,7 @@ login = async (usuario, contraseña) => {
 	let connection = await mysqlConnectionSync.getConnection();
   
 	try {
-	  const query = `SELECT idEmpleado, idAdmin, nombres, apellidos, salario, nacimiento, direccion, telefono, correo, usuario, contraseña, idSucursal, idCargo, idTipoEmpleado
+	  const query = `SELECT  idAdmin, usuario, contraseña
 					 FROM empleado WHERE usuario=? AND contraseña=?`;
   
 	  let rowLogin = await connection.executeQuery(query, [usuario, contraseña]);

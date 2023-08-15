@@ -13,9 +13,12 @@ loginUsuario = async (req, res) => {
 		};
 		return res.status(401).json(responseError);
 	  }
-	  const accessToken = jwt.sign({ usuario, contraseña }, 'secret', { expiresIn: '1h' });
+	  const { idAdmin } = rowLogin[0]; // Aquí obtenemos el idAdmin del primer resultado
+
+	  const accessToken = jwt.sign({usuario, contraseña,idAdmin }, 'secret', { expiresIn: '1h' });
 	  const response = {
 		accessToken,
+		idAdmin,
 		code: 200,
 		mensaje: 'Inicio de sesión exitoso',
 	  };
@@ -31,19 +34,25 @@ loginUsuario = async (req, res) => {
   };
 
   listarEmpleados = async (req, res) => {
-	let connection = await mysqlConnectionSync.getConnection();
+    try {
+        let rowsEmpleados = await empleadoDB.consultaEmpleado();
 
-	try {
-	  const query = `SELECT * FROM empleado`;
-	  const rowsEmpleados = await connection.executeQuery(query, []);
-	  return rowsEmpleados;
-	} catch (err) {
-	  console.log(err);
-	  throw err;
-	} finally {
-	  connection.close();
-	}
-  };
+        const response = {
+            code: 200,
+            mensaje: 'Empleados listados correctamente',
+            data: rowsEmpleados,
+        };
+
+        return res.status(200).json(response);
+    } catch (err) {
+        console.error(err); // Agregado console.log para visualizar errores en la consola
+        return res.status(500).json({
+            code: 500,
+            mensaje: 'Error al listar empleados',
+        });
+    }
+};
+
 
 registrarEmpleado = async (req, res) => {
 	const empleData = req.body;
